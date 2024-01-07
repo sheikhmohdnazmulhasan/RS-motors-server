@@ -19,6 +19,13 @@ async function run() {
 
         await client.connect();
 
+        const closeCollection = client.db('RS').collection('close');
+
+        app.post('/deal-close/v1', async (req, res) => {
+            const data = req.body;
+            const result = await closeCollection.insertOne(data);
+            res.send(result);
+        });
 
 
         await client.db("admin").command({ ping: 1 });
