@@ -30,6 +30,11 @@ async function run() {
         app.get('/cars/v1', async (req, res) => {
             const result = await shopCollection.find().toArray();
             res.send(result)
+        });
+
+        app.get('/portfolios/v1', async (req, res) => {
+            const result = await closeCollection.find().toArray();
+            res.send(result);
         })
 
         app.get('/deal-close/v1/:id', async (req, res) => {
@@ -56,7 +61,14 @@ async function run() {
             const query = { _id: new ObjectId(id) };
             const result = await shopCollection.deleteOne(query);
             res.send(result);
-        })
+        });
+
+        app.delete('/portfolio-delete/v1/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await closeCollection.deleteOne(query);
+            res.send(result);
+        });
 
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
