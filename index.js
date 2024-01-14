@@ -44,6 +44,13 @@ async function run() {
             res.send(result);
         });
 
+        app.get('/shop/v1/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await shopCollection.findOne(query);
+            res.send(result);
+        });
+
         app.post('/deal-close/v1', async (req, res) => {
             const data = req.body;
             const result = await closeCollection.insertOne(data);
@@ -54,6 +61,19 @@ async function run() {
             const data = req.body;
             const result = await shopCollection.insertOne(data);
             res.send(result);
+        });
+
+        app.patch('/edit-car/v1/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) };
+            const data = req.body;
+            const updatedDoc = {
+                $set: { title: data.title, fuelType: data.fuelType, year: data.year, mileage: data.mileage, price: data.price, bodyType: data.bodyType, condition: data.condition, transmissionType: data.transmissionType, regionalSpec: data.regionalSpec, steeringSide: data.steeringSide }
+            };
+
+            const result = await shopCollection.updateOne(filter, updatedDoc);
+            res.send(result);
+
         });
 
         app.delete('/car-delete/v1/:id', async (req, res) => {
