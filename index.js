@@ -68,10 +68,23 @@ async function run() {
             const filter = { _id: new ObjectId(id) };
             const data = req.body;
             const updatedDoc = {
-                $set: { title: data.title, fuelType: data.fuelType, year: data.year, mileage: data.mileage, price: data.price, bodyType: data.bodyType, condition: data.condition, transmissionType: data.transmissionType, regionalSpec: data.regionalSpec, steeringSide: data.steeringSide }
+                $set: { title: data.title, fuelType: data.fuelType, year: data.year, mileage: data.mileage, price: data.price, bodyType: data.bodyType, condition: data.condition, transmissionType: data.transmissionType, regionalSpec: data.regionalSpec, steeringSide: data.steeringSide, photo: data.photo }
             };
 
             const result = await shopCollection.updateOne(filter, updatedDoc);
+            res.send(result);
+
+        });
+
+        app.patch('/edit-portfolio/v1/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) };
+            const data = req.body;
+            const updatedDoc = {
+                $set: { title: data.title, fuelType: data.fuelType, year: data.year, mileage: data.mileage, price: data.price, bodyType: data.bodyType, condition: data.condition, transmissionType: data.transmissionType, regionalSpec: data.regionalSpec, steeringSide: data.steeringSide, photo: data.photo }
+            };
+
+            const result = await closeCollection.updateOne(filter, updatedDoc);
             res.send(result);
 
         });
