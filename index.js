@@ -32,10 +32,17 @@ async function run() {
             res.send(result)
         });
 
+        app.get('/cars/body-type/v1', async (req, res) => {
+            const query = { bodyType: req.query.query };
+            const result = await shopCollection.find(query).toArray();
+            res.send(result);
+
+        });
+
         app.get('/portfolios/v1', async (req, res) => {
             const result = await closeCollection.find().toArray();
             res.send(result);
-        })
+        });
 
         app.get('/deal-close/v1/:id', async (req, res) => {
             const id = req.params.id;
