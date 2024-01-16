@@ -39,6 +39,13 @@ async function run() {
 
         });
 
+        app.get('/cars/fuel-type/v1', async (req, res) => {
+            const query = { fuelType: req.query.query };
+            const result = await shopCollection.find(query).toArray();
+            res.send(result);
+
+        });
+
         app.get('/portfolios/v1', async (req, res) => {
             const result = await closeCollection.find().toArray();
             res.send(result);
