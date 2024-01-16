@@ -33,6 +33,12 @@ async function run() {
         });
 
         app.get('/cars/body-type/v1', async (req, res) => {
+            const query = { title: req.query.query };
+            const result = await shopCollection.find(query).toArray();
+            res.send(result);
+        });
+
+        app.get('/cars/body-type/v1', async (req, res) => {
             const query = { bodyType: req.query.query };
             const result = await shopCollection.find(query).toArray();
             res.send(result);
