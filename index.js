@@ -62,6 +62,12 @@ async function run() {
             res.send(result);
         });
 
+        app.get('/cars/condition/v1', async (req, res) => {
+            const query = { condition: req.query.query };
+            const result = await shopCollection.find(query).toArray();
+            res.send(result);
+        });
+
         app.get('/portfolios/v1', async (req, res) => {
             const result = await closeCollection.find().toArray();
             res.send(result);
