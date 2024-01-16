@@ -50,6 +50,12 @@ async function run() {
             res.send(result);
         });
 
+        app.get('/cars/regional-spec/v1', async (req, res) => {
+            const query = { regionalSpec: req.query.query };
+            const result = await shopCollection.find(query).toArray();
+            res.send(result);
+        });
+
         app.get('/portfolios/v1', async (req, res) => {
             const result = await closeCollection.find().toArray();
             res.send(result);
