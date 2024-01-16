@@ -36,14 +36,18 @@ async function run() {
             const query = { bodyType: req.query.query };
             const result = await shopCollection.find(query).toArray();
             res.send(result);
-
         });
 
         app.get('/cars/fuel-type/v1', async (req, res) => {
             const query = { fuelType: req.query.query };
             const result = await shopCollection.find(query).toArray();
             res.send(result);
+        });
 
+        app.get('/cars/transmission-type/v1', async (req, res) => {
+            const query = { transmissionType: req.query.query };
+            const result = await shopCollection.find(query).toArray();
+            res.send(result);
         });
 
         app.get('/portfolios/v1', async (req, res) => {
