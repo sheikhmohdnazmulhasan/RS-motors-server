@@ -148,11 +148,11 @@ async function run() {
 
         // Payment post
         app.post('/payments', async (req, res) => {
-            const payment = req.body
-            const paymentResult = await paymentCollection.insertOne(payment)
+            const payment = req.body;
+            const paymentResult = await paymentCollection.insertOne(payment);
+            res.send(paymentResult);
+        });
 
-            res.send(paymentResult)
-        })
         app.delete('/car-delete/v1/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
