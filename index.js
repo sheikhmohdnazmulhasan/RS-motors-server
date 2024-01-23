@@ -19,7 +19,7 @@ async function run() {
 
     try {
 
-        await client.connect();
+        // await client.connect();
 
         const closeCollection = client.db('RS').collection('close');
         const shopCollection = client.db('RS').collection('shop');
@@ -151,7 +151,8 @@ async function run() {
             const paymentResult = await paymentCollection.insertOne(payment)
 
             res.send(paymentResult)
-        })
+        });
+        
         app.delete('/car-delete/v1/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
