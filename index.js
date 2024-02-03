@@ -23,7 +23,8 @@ async function run() {
 
         const closeCollection = client.db('RS').collection('close');
         const shopCollection = client.db('RS').collection('shop');
-        const paymentCollection = client.db('RS').collection("payment")
+        const paymentCollection = client.db('RS').collection("payment");
+
         app.get('/deal-close/v1', async (req, res) => {
             const result = await closeCollection.find().toArray();
             res.send(result);
@@ -95,6 +96,17 @@ async function run() {
             res.send(result);
         });
 
+        app.get('/pays', async (req, res) => {
+            let query = {};
+
+            if (req.query.status) {
+                query = { status: req.query.status }
+            }
+
+            const result = await paymentCollection.find(query).toArray();
+            res.send(result)
+        });
+
         app.post('/deal-close/v1', async (req, res) => {
             const data = req.body;
             const result = await closeCollection.insertOne(data);
@@ -132,7 +144,18 @@ async function run() {
             res.send(result);
 
         });
-        
+
+        app.patch('/pays/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const updatedDoc = {
+                $set: { status: "Verified" }
+            };
+
+            const result = await paymentCollection.updateOne(query, updatedDoc);
+            res.send(result);
+        })
+
         // Payment Intent
         app.post("/payment-intent", async (req, res) => {
             const { price } = req.body;
@@ -152,7 +175,7 @@ async function run() {
 
             res.send(paymentResult)
         });
-        
+
         app.delete('/car-delete/v1/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
