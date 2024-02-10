@@ -30,6 +30,15 @@ async function run() {
             res.send(result);
         });
 
+        app.get('/smiler', async (req, res) => {
+            const brand = req.query.brand;
+            const category = req.query.category;
+            const query = { brand, category };
+            const result = await shopCollection.find(query).toArray();
+            res.send(result);
+
+        })
+
         app.get('/cars/v1', async (req, res) => {
             const result = await shopCollection.find().toArray();
             res.send(result)
